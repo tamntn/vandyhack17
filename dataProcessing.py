@@ -17,7 +17,7 @@ def RepresentsInt(s):
         return False
 
 def getZipFromLatLong(lat, lon):
-    url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lon + "&result_type=street_address&key=AIzaSyBcIGXEd-1-6ZrqjN_ZpN-0IiM5_VNovX4"
+    url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lon + "&result_type=street_address&key=AIzaSyCl4I1cW2d2ottGpkhpq7y9yeO5cPFgp0w"
     request = Request(url)
     try:
         response = urlopen(request)
@@ -35,7 +35,7 @@ def getZipFromLatLong(lat, lon):
         firstResult = (parsed_json['results'][0]['address_components'])
         for x in range(0, len(firstResult)):
             if firstResult[x]["types"] == [ "postal_code" ]:
-                return str(firstResult[x]["long_name"])
+                return (firstResult[x]["long_name"]).encode('utf-8')
 
 with open(newfile, 'a') as csvfile:
     spamwriter = csv.writer(csvfile, delimiter=',',
