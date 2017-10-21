@@ -48,6 +48,12 @@
       <button onclick="changeRadius()">Change radius</button>
       <button onclick="changeOpacity()">Change opacity</button>
     </div> -->
+    <div>
+      <form action="/test" method="POST">
+        <input type='text' name='zipcode' placeholder="Zip Code">
+        <button class="btn btn-danger search_button" type="submit" name="search">Submit</button>
+      </form>
+    </div>
     <div id="formatted-address"></div>
     <div id="map"></div>
     <script>
@@ -58,33 +64,35 @@
 
       var map, heatmap;
 
-      geocode();
+      //geocode();
 
-      function geocode(){
-        var location = '38655'
-        axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
-            params:{
-              address: location,
-              key: 'AIzaSyBiiXe8XzHrBmgTMU8FrScTdzSa-00Xi-U'
-            }
-        })
-        .then(function(response){
-          //log full response
-          console.log(response);
 
-          //formatted Address
-          var myLatLng={}
-          myLatLng.push(format)
-          var formattedAddress = response.data.results[0].geometry.location.lat;
-          var formattedAddressOutput = '<ul class = "list-group"><li class="list-group-item">'+formattedAddress+'</li><ul>';
+      // function geocode(){
+      //   var location = '38655'
+      //   axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
+      //       params:{
+      //         address: location,
+      //         key: 'AIzaSyBiiXe8XzHrBmgTMU8FrScTdzSa-00Xi-U'
+      //       }
+      //   })
+      //   .then(function(response){
+      //     //log full response
+      //     console.log(response);
 
-          document.getElementById('formatted-address').innerHTML = formattedAddressOutput;
+      //     //formatted Address
+      //     var myLatLng={}
+      //     myLatLng.push(response.data.results[0].geometry.location.lat)
+      //     var formattedAddress = response.data.results[0].geometry.location.lat;
+      //     var formattedAddressOutput = '<ul class = "list-group"><li class="list-group-item">'+formattedAddress+'</li><ul>';
 
-        })
-        .catch(function(error){
-          console.log(error);
-        });
-      }
+      //     document.getElementById('formatted-address').innerHTML = formattedAddressOutput;
+
+      //   })
+      //   .catch(function(error){
+      //     console.log(error);
+      //   });
+      // }
+
 
       function initMap() {
 
