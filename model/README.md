@@ -6,7 +6,9 @@
 ### Functions
 prob\_zip: Returns a str-to-float dictionary where the strings are ZIP codes and the floats are mutually exclusive probabilities for crime
 
-prob\_crime: Returns a str-to-float dictionary where the strings are type of crime and the floats are mutually exclusive probabilities for crime
+prob\_crime: Returns a str-to-float dictionary where the strings are types of crime and the floats are mutually exclusive probabilities for such crimes
+
+prob\_both: Returns a tuple of the results of prob\_zip and prob\_crime
 
 #### Calling Functions
 Call any given function f in the module like so: f(month, hour, day)
