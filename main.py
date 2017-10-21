@@ -36,9 +36,9 @@ def bot_talk():
 	'workspace_id':'1d7276eb-2bff-4e67-b8fc-8261df022546',
 	'message_input':{'text': message},	
     'context': context},
-    'entities': None, 'intents':None, 'output':None, 'alternate_intents':False
+    new(response))
     
-	)
+
 
 
 	account_sid = "ACc5173ddda5dea6f7c9b4398c0f80d545"
@@ -49,7 +49,7 @@ def bot_talk():
 	message1 = client.messages.create(
 		to=number, 
 		from_=twilioNumber,
-		body=response.output.text[0])
+		body="y no watson?")
 
 	# def new(response):
 	# 	print(response.output.text[0])

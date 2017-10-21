@@ -30,9 +30,8 @@ html, body{
 	margin-top: 20px;
 }
 
-.jumbotron {
-    padding: 0;
-    margin: 0;
+#map_banner {
+    margin-top: 20px;
 }
 
 #map{
