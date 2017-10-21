@@ -1,4 +1,6 @@
 from flask import Flask, render_template, url_for, request
+from twilio.twiml.messaging_response import MessagingResponse
+
 import json
 import numpy as np
 
@@ -42,3 +44,18 @@ def latAndLng(zipcode):
 			dct['lng'] = np.float32(tokens[6])
 			lat.append(dct)
 	return lat
+def incoming_sms():
+    """Send a dynamic reply to an incoming text message"""
+    # Get the message the user sent our Twilio number
+    body = request.values.get('Body', None)
+
+    # Start our TwiML response
+    resp = MessagingResponse()
+
+    # Determine the right reply for this message
+    resp.message("this is a reply")
+
+    return str(resp)
+
+if __name__ == "__main__":
+    app.run(debug=True)
