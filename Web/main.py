@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route("/")
 def hello():
 	data = {"lat": 37.775, "lng": -56.434}
-	return render_template('crime_foretell.html', result=data)
+	return render_template('index.html', result=data)
 
 @app.route('/maps')
 def maps(data=None):
