@@ -1,7 +1,4 @@
-import cntk as C
 import numpy as np
-
-C.use_default_device()
 
 model_prefixes = ["arizona"]
 dictDir = ""
@@ -28,16 +25,39 @@ weekdaysDict = loadDict(dictPaths[2])
 zipsDict = loadDict(dictPaths[3])
 crimesDict = loadDict(dictPaths[4])
 
-features = C.input_variable(len(monthsDict) + len(hoursDict) + len(weekdaysDict), dtype = numType)
-#zip_labels = C.input_variable(len(zipsDict))
-#crime_labels = C.input_variable(len(crimesDict))
+num_features = len(monthsDict) + len(hoursDict) + len(weekdaysDict)
+num_zips = len(zipsDict)
+num_crimes = len(crimesDict)
 
-zip_model = C.Function.load(modelDir + model_prefixes[0] + "_zips.cmf")
+def softmax(array):
+    return np.exp(array) / sum(np.exp(array))
 
-crime_model = C.Function.load(modelDir + model_prefixes[0] + "_crimes.cmf")
+#Extract weights and biases written to text from CNTK script
+def parameters(path, num_features, num_classes):
+    weights = np.ndarray( (num_features, num_classes), dtype = numType )
+    biases = np.ndarray( (num_classes), dtype = numType )
 
-#print(zip_model)
-#print(crime_model)
+    with open(path, "r") as params:
+        i = 0
+        j = 0
+        for k in range(num_features * num_classes):
+            weight = params.readline().strip()
+            weights[i][j] = weight
+            j += 1
+            if j == num_classes:
+                j = 0
+                i += 1
+
+        for k in range(num_classes):
+            bias = params.readline().strip()
+            biases[k] = bias
+
+    return weights, biases
+
+
+zip_weights, zip_biases = parameters("zips.param", num_features, num_zips)
+crime_weights, crime_biases = parameters("crimes.param", num_features, num_crimes)
+
 
 def toOneHot(category, indexDict):
     oneHot = np.zeros((len(indexDict)), dtype = numType)
@@ -60,15 +80,21 @@ def convertInputs(month, hour, day):
 
     return np.concatenate( (month, hour, day) )
 
+
+def applyParameters(features, weights, biases):
+    product = np.dot( np.transpose(weights), features ) 
+    return product + biases
+
+
 def prob_zip_helper(month, hour, day, model_prefix = model_prefixes[0]):
     input_var = convertInputs(month, hour, day)
-    probs = zip_model.eval({zip_model.arguments[0] : input_var})
-    return C.softmax(probs).eval()
+    probs = applyParameters(input_var, zip_weights, zip_biases)
+    return softmax(probs)
 
 def prob_crime_helper(month, hour, day, model_prefix = model_prefixes[0]):
     input_var = convertInputs(month, hour, day)
-    probs = crime_model.eval({crime_model.arguments[0] : input_var})
-    return C.softmax(probs).eval()
+    probs = applyParameters(input_var, crime_weights, crime_biases)
+    return softmax(probs)
 
 
 def sortedByValue(probs, dictionary):
@@ -89,22 +115,19 @@ def sortedByValue(probs, dictionary):
 
 def prob_zip(month, hour, day, model_prefix = model_prefixes[0]):
     probs = prob_zip_helper(month, hour, day, model_prefix = model_prefix)
-    return sortedByValue(probs[0], zipsDict)
+    return sortedByValue(probs, zipsDict)
 
     #return np.ndarray.tolist(prob_zip_helper(month, hour, day, model_prefix = model_prefix))[0]
 
 def prob_crime(month, hour, day, model_prefix = model_prefixes[0]):
     probs = prob_crime_helper(month, hour, day, model_prefix = model_prefix)
-    return sortedByValue(probs[0], crimesDict)
+    return sortedByValue(probs, crimesDict)
 
     #return np.ndarray.tolist(prob_crime_helper(month, hour, day, model_prefix = model_prefix))[0]
 
 def prob_both(month, hour, day, model_prefix = model_prefixes[0]):
     return prob_zip(month, hour, day, model_prefix = model_prefix), prob_crime(month, hour, day, model_prefix = model_prefix)
 
-#zip_code, crime = prob_both("7", "3", "Wednesday")
-#print(zip_code)
-#print(crime)
 
 """
 def eval_zip(month, hour, day, model_prefix = model_prefixes[0]):
@@ -119,7 +142,6 @@ def eval_crime(month, hour, day, model_prefix = model_prefixes[0]):
 
 def eval_both(month, hour, day, model_prefix = model_prefixes[0]):
     return eval_zip(month, hour, day, model_prefix = model_prefix), eval_crime(month, hour, day, model_prefix = model_prefix)
-
 """
 
 
