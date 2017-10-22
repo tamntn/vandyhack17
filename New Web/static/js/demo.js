@@ -45,14 +45,16 @@ demo = {
         md.startAnimationForLineChart(dailySalesChart);
     },
 
+
+
     initDashboardPageCharts: function() {
 
-        /* ----------==========     Daily Sales Chart initialization    ==========---------- */
+        /* ----------==========     Weekdays, Liquor Graph 2   ==========---------- */
 
         dataDailySalesChart = {
-            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             series: [
-                [12, 17, 7, 17, 23, 18, 38]
+                [2873, 3142, 3396, 3653, 3708, 3119, 3057, 3782, 4735, 4500, 3749, 2875]
             ]
         };
 
@@ -60,13 +62,13 @@ demo = {
             lineSmooth: Chartist.Interpolation.cardinal({
                 tension: 0
             }),
-            low: 0,
-            high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+            low: 2000,
+            high: 4800, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
             chartPadding: {
                 top: 0,
                 right: 0,
                 bottom: 0,
-                left: 0
+                left: 10
             },
         }
 
@@ -79,9 +81,9 @@ demo = {
         /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
 
         dataCompletedTasksChart = {
-            labels: ['12am', '3pm', '6pm', '9pm', '12pm', '3am', '6am', '9am'],
+            labels: ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017'],
             series: [
-                [230, 750, 450, 300, 280, 240, 200, 190]
+                [8388, 12875,  8547,  3909,  3679,  1159,  2047,  1985 ]
             ]
         };
 
@@ -89,13 +91,13 @@ demo = {
             lineSmooth: Chartist.Interpolation.cardinal({
                 tension: 0
             }),
-            low: 0,
-            high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+            low: 1900,
+            high: 13000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
             chartPadding: {
                 top: 0,
                 right: 0,
                 bottom: 0,
-                left: 0
+                left: 10
             }
         }
 
@@ -105,25 +107,25 @@ demo = {
         md.startAnimationForLineChart(completedTasksChart);
 
 
-        /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
+        /* ----------==========     Weekdays, Liquor Graph    ==========---------- */
 
-        var dataEmailsSubscriptionChart = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        var dataWeedaysAndWeekend = {
+            labels: ['Sunday - Thursday', 'Friday & Saturday'],
             series: [
-                [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
+                [983, 1382]
 
             ]
         };
-        var optionsEmailsSubscriptionChart = {
+        var optionsLiquorGraph = {
             axisX: {
                 showGrid: false
             },
             low: 0,
-            high: 1000,
+            high: 1500,
             chartPadding: {
                 top: 0,
                 right: 5,
-                bottom: 0,
+                bottom: 10,
                 left: 0
             }
         };
@@ -137,10 +139,10 @@ demo = {
                 }
             }]
         ];
-        var emailsSubscriptionChart = Chartist.Bar('#emailsSubscriptionChart', dataEmailsSubscriptionChart, optionsEmailsSubscriptionChart, responsiveOptions);
+        var liquorGraph = Chartist.Bar('#emailsSubscriptionChart', dataWeedaysAndWeekend, optionsLiquorGraph, responsiveOptions);
 
         //start animation for the Emails Subscription Chart
-        md.startAnimationForBarChart(emailsSubscriptionChart);
+        md.startAnimationForBarChart(liquorGraph);
 
     },
 
