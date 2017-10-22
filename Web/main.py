@@ -1,8 +1,13 @@
 from flask import Flask, render_template, url_for, request
 #from twilio.twiml.messaging_response import MessagingResponse
 
+
 import json
 import numpy as np
+
+from application.app.folder.file import prob_zip, prob_crime, prob_both
+# import sys
+# sys.path.insert(0,'/path/to/model/'))
 
 app = Flask(__name__)
 
@@ -23,27 +28,6 @@ def results():
 def maps(data=None):
 	data = {"lat": 37.775, "lng": -56.434}
 	return render_template('maps.html',result=data)
-
-# @app.route('/test')
-# def test(data=None):
-# 	data = {"lat": 37.775, "lng": -122.434}
-# 	return render_template('test.html',result=json.dumps(data))
-
-# def latAndLng(zipcode):
-# 	data = file("../Dataset/cleanedArizona.csv")
-# 	data = data.read()
-# 	data = data.split('\n')
-
-# 	lat=[]
-# 	dct={}
-
-# 	for i in data:
-# 		tokens = i.split(',')
-# 		if(tokens[4] == zipcode):
-# 			dct['lat'] = np.float32(tokens[5])
-# 			dct['lng'] = np.float32(tokens[6])
-# 			lat.append(dct)
-# 	return lat
 
 def latAndLng(zipcode):
 	data = file("../Dataset/cleanedArizona.csv")
@@ -94,21 +78,6 @@ def latAndLng(zipcode):
 			lct.append(lat1[i])
 			lct.append(lng1[i+1])
 	return lct
-	# if len(lat)>len(lng):
-	# for i in range(len(lng)):
-	# 	if lat[i] in lct and lng[i] in lct:
-	# 		a=a+1
-	# 	else:
-	# 		lct.append(np.float32(lat[i]))
-	# 		lct.append(np.float32(lng[i]))
-	# else:
-	# 	for i in range(len(lat)):
-	# 		if lat[i] in lct and lng[i] in lct:
-	# 			a=a+1
-	# 		else:
-	# 			lct.append(np.float32(lat[i]))
-	# 			lct.append(np.float32(lng[i]))
-	
 
 def incoming_sms():
     """Send a dynamic reply to an incoming text message"""
