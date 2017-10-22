@@ -30,7 +30,7 @@
 -->
         <div class="logo">
             <a href="./" class="simple-text">
-                Campus Crime Modeling
+                Red Zone
             </a>
         </div>
         <div class="sidebar-wrapper">
@@ -93,72 +93,127 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-8" id="visualization">
+                    <div class="col-md-1" id="visualization">
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-10">
                         <div class="card">
                             <div class="card-header" data-background-color="purple">
                                 <h4 class="title">Crime Type Ranking</h4>
-                                <p class="category">Showing probabilities for today.</p>
+                                <p class="category">Showing probabilities for today (Ranking algorithm currently not correctly implemented - However, probabilities are valid.)</p>
                             </div>
                             <div class="card-content table-responsive">
                                 <table class="table">
                                     <thead class="text-primary">
-                                    <th style="width: 15%">Rank</th>
-                                    <th style="width: 60%">Crime Type</th>
-                                    <th style="width: 25%">Probability</th>
+                                    <th style="width: 6%">Rank</th>
+                                    <th style="width: 17%">Crime Type</th>
+                                    <th style="width: 10%">Probability</th>
+                                    <th style="width: 6%">Rank</th>
+                                    <th style="width: 17%">Crime Type</th>
+                                    <th style="width: 10%">Probability</th>
+                                    <th style="width: 6%">Rank</th>
+                                    <th style="width: 17%">Crime Type</th>
+                                    <th style="width: 10%">Probability</th>
                                     </thead>
                                     <tbody>
                                     <tr>
                                         <td>1</td>
                                         <td id="type1"></td>
                                         <td id="prob1"></td>
+                                        <td>10</td>
+                                        <td id="type10"></td>
+                                        <td id="prob10"></td>
+                                        <td>19</td>
+                                        <td id="type19"></td>
+                                        <td id="prob19"></td>
                                     </tr>
                                     <tr>
                                         <td>2</td>
                                         <td id="type2"></td>
                                         <td id="prob2"></td>
+                                        <td>11</td>
+                                        <td id="type11"></td>
+                                        <td id="prob11"></td>
+                                        <td>20</td>
+                                        <td id="type20"></td>
+                                        <td id="prob20"></td>
                                     </tr>
                                     <tr>
                                         <td>3</td>
                                         <td id="type3"></td>
                                         <td id="prob3"></td>
+                                        <td>12</td>
+                                        <td id="type12"></td>
+                                        <td id="prob12"></td>
+                                        <td>21</td>
+                                        <td id="type21"></td>
+                                        <td id="prob21"></td>
                                     </tr>
                                     <tr>
                                         <td>4</td>
                                         <td id="type4"></td>
                                         <td id="prob4"></td>
+                                        <td>13</td>
+                                        <td id="type13"></td>
+                                        <td id="prob13"></td>
+                                        <td>22</td>
+                                        <td id="type22"></td>
+                                        <td id="prob22"></td>
                                     </tr>
                                     <tr>
                                         <td>5</td>
                                         <td id="type5"></td>
                                         <td id="prob5"></td>
+                                        <td>14</td>
+                                        <td id="type14"></td>
+                                        <td id="prob14"></td>
+                                        <td>23</td>
+                                        <td id="type23"></td>
+                                        <td id="prob23"></td>
                                     </tr>
                                     <tr>
                                         <td>6</td>
                                         <td id="type6"></td>
                                         <td id="prob6"></td>
+                                        <td>15</td>
+                                        <td id="type15"></td>
+                                        <td id="prob15"></td>
+                                        <td>24</td>
+                                        <td id="type24"></td>
+                                        <td id="prob24"></td>
                                     </tr>
                                     <tr>
                                         <td>7</td>
                                         <td id="type7"></td>
                                         <td id="prob7"></td>
+                                        <td>16</td>
+                                        <td id="type16"></td>
+                                        <td id="prob16"></td>
+                                        <td>25</td>
+                                        <td id="type25"></td>
+                                        <td id="prob25"></td>
                                     </tr>
                                     <tr>
                                         <td>8</td>
                                         <td id="type8"></td>
                                         <td id="prob8"></td>
+                                        <td>17</td>
+                                        <td id="type17"></td>
+                                        <td id="prob17"></td>
+                                        <td>26</td>
+                                        <td id="type26"></td>
+                                        <td id="prob26"></td>
                                     </tr>
                                     <tr>
                                         <td>9</td>
                                         <td id="type9"></td>
                                         <td id="prob9"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>10</td>
-                                        <td id="type10"></td>
-                                        <td id="prob10"></td>
+                                        <td>18</td>
+                                        <td id="type18"></td>
+                                        <td id="prob18"></td>
+                                        <td>27</td>
+                                        <td id="type27"></td>
+                                        <td id="prob27"></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -174,9 +229,9 @@
                 <div class="col-lg-2 col-md-2 col-sm-2">
                     <h4 style="vertical-align: middle; color: purple">Predicting Criteria: </h4>
                 </div>
-                <form class="form-inline">
+                <form class="form-inline" action='/typePrediction' method="POST">
                     <label for="month">Month </label>
-                    <select class="custom-select" id="month" required>
+                    <select class="custom-select" name="month" id="month" required>
                         <option value="">Choose...</option>
                         <option value="1">January</option>
                         <option value="2">February</option>
@@ -193,7 +248,7 @@
                     </select>
 
                     <label for="time">Time of Day </label>
-                    <select class="custom-select" id="time" required>
+                    <select class="custom-select" name="time" id="time" required>
                         <option value="">Choose...</option>
                         <option value="0">12:00 am</option>
                         <option value="1">1:00 am</option>
@@ -222,7 +277,7 @@
                     </select>
 
                     <label for="day">Day of Week </label>
-                    <select class="custom-select" id="day" required>
+                    <select class="custom-select" name="day" id="day" required>
                         <option value="">Choose...</option>
                         <option value="Monday">Monday</option>
                         <option value="Tuesday">Tuesday</option>
@@ -254,9 +309,38 @@
 <!--  Notifications Plugin    -->
 <script src="../static/js/bootstrap-notify.js"></script>
 <!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+{#<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>#}
 <!-- Material Dashboard javascript methods -->
 <script src="../static/js/material-dashboard.js?v=1.2.0"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="../static/js/demo.js"></script>
+
+<script>
+    var results = []
+</script>
+
+{% for i in data %}
+    <script>
+        var val = "{{ i }}";
+            results.push(val);
+    </script>
+{% endfor %}
+
+<!-- <script type="text/javascript" src='../static/'></script>> -->
+<script>
+    console.log(results.length);
+    $(document).ready(function () {
+        for (var i = 1; i < results.length-2; i = i + 2) {
+        var name = results[i-1].toString();
+        var prob = results[i].toString();
+        console.log(name);
+        console.log(prob);
+        var count = (i+1)/2;
+        var nameID = "#type".concat(count.toString());
+        var probID = "#prob".concat(count.toString());
+        $(nameID).text(name);
+        $(probID).text(prob);
+    }
+    });
+</script>
 </html>
