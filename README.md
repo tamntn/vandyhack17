@@ -1,4 +1,4 @@
-# vandyhack17
+# VandyHacks17
 
 ## Inspiration
 With college campus' increased focus on student safety in recent years, we desired to analyze crime rates in notable college towns.
