@@ -2,6 +2,8 @@ from flask import Flask, render_template, url_for,  request, redirect
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
 import json
+import watson_developer_cloud 
+
 
 app = Flask(__name__)
 
