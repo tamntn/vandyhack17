@@ -2,107 +2,145 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="../static/img/apple-icon.png" />
-    <link rel="icon" type="image/png" href="../static/img/favicon.png" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="../static/img/apple-icon.png"/>
+    <link rel="icon" type="image/png" href="../static/img/favicon.png"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <title>Location Prediction</title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-    <meta name="viewport" content="width=device-width" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
+    <meta name="viewport" content="width=device-width"/>
     <!-- Bootstrap core CSS     -->
-    <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet"/>
     <!--  Material Dashboard CSS    -->
-    <link href="../static/css/material-dashboard.css?v=1.2.0" rel="stylesheet" />
+    <link href="../static/css/material-dashboard.css?v=1.2.0" rel="stylesheet"/>
     <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="../static/css/demo.css" rel="stylesheet" />
+    <link href="../static/css/demo.css" rel="stylesheet"/>
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet'
+          type='text/css'>
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="sidebar" data-color="purple" data-image="../static/img/sidebar-1.jpg">
-            <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
-        Tip 2: you can also add an image using data-image tag
-    -->
-            <div class="logo">
-                <a href="./" class="simple-text">
-                    Campus Crime Modeling
-                </a>
-            </div>
-            <div class="sidebar-wrapper">
-                <ul class="nav">
-                    <li>
-                        <a href="./">
-                            <i class="material-icons">trending_up</i>
-                            <p>Overview</p>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a href="./locationPrediction">
-                            <i class="material-icons">location_on</i>
-                            <p>Location Prediction</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="./typePrediction">
-                            <i class="material-icons">view_list</i>
-                            <p>Type Prediction</p>
-                        </a>
-                    </li>
-                    <li class="active-pro">
-                        <a href="./contact">
-                            <i class="material-icons">email</i>
-                            <p>Contact Us</p>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+<div class="wrapper">
+    <div class="sidebar" data-color="purple" data-image="../static/img/sidebar-1.jpg">
+        <!--
+    Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
+    Tip 2: you can also add an image using data-image tag
+-->
+        <div class="logo">
+            <a href="./" class="simple-text">
+                Campus Crime Modeling
+            </a>
         </div>
-
-        <div class="main-panel">
-            <nav class="navbar navbar-transparent navbar-absolute">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#"> Crime Probability - Geolocation </a>
-                    </div>
-                    <div class="collapse navbar-collapse">
-                        <form class="navbar-form navbar-right" role="search">
-                            <div class="form-group  is-empty">
-                                <input type="text" class="form-control" placeholder="Search">
-                                <span class="material-input"></span>
-                            </div>
-                            <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                                <i class="material-icons">search</i>
-                                <div class="ripple-container"></div>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </nav>
-{#            <div class="content">#}
-{#            <div class="row">#}
-{#                <div class="col-lg-9 col-md-9 col-sm-9">#}
-{#                    <div id="map">#}
-{##}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="col-lg-3 col-md-3 col-sm-3">#}
-{#                    <p>Hello</p>#}
-{#                </div>#}
-{#            </div>#}
-{#            </div>#}
-            <div id="map"></div>
+        <div class="sidebar-wrapper">
+            <ul class="nav">
+                <li>
+                    <a href="./">
+                        <i class="material-icons">trending_up</i>
+                        <p>Overview</p>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="./locationPrediction">
+                        <i class="material-icons">location_on</i>
+                        <p>Location Prediction</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="./typePrediction">
+                        <i class="material-icons">view_list</i>
+                        <p>Type Prediction</p>
+                    </a>
+                </li>
+                <li class="active-pro">
+                    <a href="./contact">
+                        <i class="material-icons">email</i>
+                        <p>Contact Us</p>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-transparent navbar-absolute">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"> Crime Probability - Geolocation </a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <form class="navbar-form navbar-right" role="search">
+                        <div class="form-group  is-empty">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <span class="material-input"></span>
+                        </div>
+                        <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                            <i class="material-icons">search</i>
+                            <div class="ripple-container"></div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        {#            <div class="content">#}
+        {#                <div class="container-fluid">#}
+        {#                    <div class="row">#}
+        {#                        <div class="col-lg-9 col-md-9 col-sm-9">#}
+        {#                            <div id="map">#}
+        {#                            </div>#}
+        {#                        </div>#}
+        {#                        <div class="col-lg-3 col-md-3 col-sm-3">#}
+        {#                            <p>Hello</p>#}
+        {#                        </div>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+
+        <div style="width:100%;height:calc(90% - 70px);position: relative;">
+            <div id="map"></div>
+        </div>
+        <div style="width:80%; height:10%; position: fixed; float:right; bottom: 0px; right: 0px;">
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                    <h4 style="vertical-align: middle">Predicting Criteria: </h4>
+                </div>
+                <form class="form-inline">
+                    <label class="mr-sm-2" for="inlineFormCustomSelectPref">Preference</label>
+                    <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelectPref">
+                        <option selected>Choose...</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+
+                    <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                        <input type="checkbox" class="custom-control-input">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Remember my preference</span>
+                    </label>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+        {#            <div class="content">#}
+        {#                <div class="container-fluid">#}
+        {#                    <div class="row">#}
+        {#                        <div class="col-lg-9" style="width:80%;height:calc(100% - 70px);position: absolute;">#}
+        {#                            <div id="map"></div>#}
+        {#                        </div>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+    </div>
+</div>
 </body>
 
 <!--   Core JS Files   -->
@@ -118,13 +156,14 @@
 <!--  Notifications Plugin    -->
 <script src="../static/js/bootstrap-notify.js"></script>
 <!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiiXe8XzHrBmgTMU8FrScTdzSa-00Xi-U"></script>
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiiXe8XzHrBmgTMU8FrScTdzSa-00Xi-U"></script>
 <!-- Material Dashboard javascript methods -->
 <script src="../static/js/material-dashboard.js?v=1.2.0"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="../static/js/demo.js"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         if ($('.main-panel > .content').length == 0) {
             $('.main-panel').css('height', '100%');
         }
