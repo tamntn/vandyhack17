@@ -10,33 +10,13 @@ app = Flask(__name__)
 def hello():
 	return render_template('dashboard.html')
 
-@app.route("/icons")
-def icons():
-	return render_template('icons.html')
+@app.route("/locationPrediction")
+def locationPrediction():
+	return render_template('locationPrediction.html')
 
-@app.route("/maps")
-def maps():
-	return render_template('maps.html')
-
-@app.route("/notifications")
-def notifications():
-	return render_template('notifications.html')
-
-@app.route("/table")
-def table():
-	return render_template('table.html')
-
-@app.route("/template")
-def template():
-	return render_template('template.html')
-
-@app.route("/typography")
-def typography():
-	return render_template('typography.html')
-
-@app.route("/user")
-def user():
-	return render_template('user.html')
+@app.route("/typePrediction")
+def typePrediction():
+	return render_template('typePrediction.html')
 
 @app.route("/contact")
 def contact():
@@ -51,6 +31,34 @@ def showMaps(data=None):
 def test(data=None):
 	data = {"lat": 37.775, "lng": -122.434}
 	return render_template('test.html',result=json.dumps(data))
+
+
+
+######################### Old Menu Sidebar #######################
+
+@app.route("/icons")
+def icons():
+	return render_template('archive/icons.html')
+
+@app.route("/maps")
+def maps():
+	return render_template('maps.html')
+
+@app.route("/notifications")
+def notifications():
+	return render_template('archive/notifications.html')
+
+@app.route("/table")
+def table():
+	return render_template('archive/table.html')
+
+@app.route("/typography")
+def typography():
+	return render_template('archive/typography.html')
+
+@app.route("/user")
+def user():
+	return render_template('archive/user.html')
 
 def redzone():
 	redzone=["Weir","Library","Square","down town"]
