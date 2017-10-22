@@ -3,7 +3,7 @@ from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
 import json
 import watson_developer_cloud 
-
+import sys
 
 app = Flask(__name__)
 
@@ -63,12 +63,16 @@ def user():
 	return render_template('archive/user.html')
 
 def redzone():
-	redzone=["Weir","Library","Square","down town"]
-	return redzone
+	redzones=["Weir","Library","Square","down town"]
+	re=""
+	for redzone in redzones:
+		re=re+" \n"+redzone
+	return re
 
 contexts=[]
 @app.route("/bot", methods=['GET','POST'])
 def bot_talk():
+	
 	message=request.values.get('Body',None)
 	number=request.values.get('From',None)
 	twilioNumber = request.values.get('To')
@@ -82,7 +86,7 @@ def bot_talk():
 			contextIndex=index
 		index=index+1
 	print("Received Message from "+number+"saying " +message )
-
+	
 	conversation = watson_developer_cloud.ConversationV1(
    	 username='baa8a3a1-6dc1-4458-a23a-ce3115133ae2',
    	 password='MD42bUyTN2CE',
@@ -95,14 +99,10 @@ def bot_talk():
 
 	account_sid = "ACc5173ddda5dea6f7c9b4398c0f80d545"
 	auth_token  = "87e59826d7f49301f6bebedf32d21d51"
-
 	client = Client(account_sid, auth_token)
+
 	try:
-		
-		
 		def new(response):
-			
-				#resp=
 			if context == None:
 				contexts.append({'from': number, 'context': response.context})
 			else:
