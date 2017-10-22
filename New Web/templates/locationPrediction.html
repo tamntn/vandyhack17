@@ -109,11 +109,11 @@
         <div style="width:100%; height:8%; position: fixed; float:right; bottom: 0px; right: 0px; background-color: purple">
             <div class="row" style="text-align: center">
                 <div class="col-lg-2 col-md-2 col-sm-2">
-                    <h4 style="color: purple"><strong>Predicting Criteria: </strong></h4>
+                    <h4 style="color: purple">Predicting Criteria: </h4>
                 </div>
-                <form class="form-inline">
+                <form class="form-inline" action='/locationPrediction' method="POST">
                     <label for="month">Month </label>
-                    <select class="custom-select" id="month" required>
+                    <select class="custom-select" name="month" id="month" required>
                         <option value="">Choose...</option>
                         <option value="1">January</option>
                         <option value="2">February</option>
@@ -129,8 +129,8 @@
                         <option value="12">December</option>
                     </select>
 
-                    <label for="time">   Time of Day </label>
-                    <select class="custom-select" id="time" required>
+                    <label for="time">Time of Day </label>
+                    <select class="custom-select" name="time" id="time" required>
                         <option value="">Choose...</option>
                         <option value="0">12:00 am</option>
                         <option value="1">1:00 am</option>
@@ -158,8 +158,8 @@
                         <option value="23">11:00 pm</option>
                     </select>
 
-                    <label for="day">   Day of Week </label>
-                    <select class="custom-select" id="day" required>
+                    <label for="day">Day of Week </label>
+                    <select class="custom-select" name="day" id="day" required>
                         <option value="">Choose...</option>
                         <option value="Monday">Monday</option>
                         <option value="Tuesday">Tuesday</option>
@@ -169,8 +169,9 @@
                         <option value="Saturday">Saturday</option>
                         <option value="Sunday">Sunday</option>
                     </select>
-                    <label for="predict">   </label>
-                    <button type="submit" class="btn btn-info" id="predict">Submit</button>
+
+                    <label></label>
+                    <button type="submit" class="btn btn-info">Submit</button>
                 </form>
             </div>
         </div>
@@ -190,9 +191,9 @@
 <script src="../static/js/perfect-scrollbar.jquery.min.js"></script>
 <!--  Notifications Plugin    -->
 <script src="../static/js/bootstrap-notify.js"></script>
-<!--  Google Maps Plugin    -->
-<script type="text/javascript"
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiiXe8XzHrBmgTMU8FrScTdzSa-00Xi-U"></script>
+
+
+
 <!-- Material Dashboard javascript methods -->
 <script src="../static/js/material-dashboard.js?v=1.2.0"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
@@ -203,8 +204,106 @@
             $('.main-panel').css('height', '100%');
         }
         // Javascript method's body can be found in static/js/demos.js
-        demo.initGoogleMaps();
+        //demo.initGoogleMaps();
     });
 </script>
+<!--  Google Maps Plugin    -->
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiiXe8XzHrBmgTMU8FrScTdzSa-00Xi-U&libraries=visualization&callback=initialize">
+    </script>
+<!-- Map Custimization -->
+<script>
+            var coordinates=[]
+        </script>
+        {% for i in data %}
 
+        <script>
+
+            var val = {{ i }}
+            coordinates.push( val.toString() );
+
+
+
+        </script>
+        {% endfor %}
+
+<!-- <script type="text/javascript" src='../static/'></script>> -->
+<script>
+     console.log(coordinates)
+     var max = coordinates[1]
+     var min = coordinates[1]
+     for (var i =0; i<10;i=i+2){
+        if (max < coordinates[i+1]){
+            max = coordinates[i+1];
+        }
+        if (min>coordinates[i+1]){
+            min = coordinates[i+1];
+        }
+     }
+  var MIN_NO_ACC = min;
+  var MAX_NO_ACC = max*1000;
+function initialize() {
+    geocoder = new google.maps.Geocoder();
+  var mapProp = {
+    center:new google.maps.LatLng(32.2386,-110.95612),
+    zoom:11,
+    mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+  var map=new google.maps.Map(document.getElementById("map"),mapProp);
+
+  for(var i =0; i<22;i=i+2){
+    var str = coordinates[i];
+    console.log(str)
+    codeAddress(str,+coordinates[i+1]*1000)
+  }
+  // codeAddress("10001", 1);
+  // codeAddress("10002", 0.8);
+  // codeAddress("10003", 0.5);
+  // codeAddress("10004", 0.4);
+  // codeAddress("10005", 0.35);
+  // codeAddress("10006", 0.1);
+
+   function codeAddress(zip, noAccidents) {
+    //var address = document.getElementById("address").value;
+geocoder.geocode( { 'address': zip}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+
+        var hotSpot = results[0].geometry.location;
+        console.log(hotSpot + " " + noAccidents);
+
+        var heatMapZip = [
+        {location: hotSpot, weight: noAccidents}
+
+        ];
+
+       var color =[
+            "#ff0000",
+            "#00ff00"
+        ];
+
+        var heatmap = new google.maps.visualization.HeatmapLayer({
+          data: heatMapZip,
+          radius: 70,
+          dissapating: false
+        });
+
+        var rate = (noAccidents-MIN_NO_ACC)/(MAX_NO_ACC-MIN_NO_ACC);
+          console.log(rate);
+        var gradient = [
+            'rgba('+Math.round(255*rate)+', '+Math.round(255*(1-rate))+', 0, 0)',
+            'rgba('+Math.round(255*rate)+', '+Math.round(255*(1-rate))+', 0, 1)'];
+        heatmap.set('gradient', gradient);
+        heatmap.setMap(map);
+
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+  }
+
+
+}
+
+</script>
 </html>
