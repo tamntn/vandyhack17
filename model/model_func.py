@@ -33,6 +33,7 @@ features = C.input_variable(len(monthsDict) + len(hoursDict) + len(weekdaysDict)
 #crime_labels = C.input_variable(len(crimesDict))
 
 zip_model = C.Function.load(modelDir + model_prefixes[0] + "_zips.cmf")
+
 crime_model = C.Function.load(modelDir + model_prefixes[0] + "_crimes.cmf")
 
 #print(zip_model)
@@ -44,14 +45,13 @@ def toOneHot(category, indexDict):
     return oneHot 
 
 
-def fromOneHot(oneHot, indexDict):
+def fromProbs(oneHot, indexDict):
     index = np.argmax(oneHot)
     for key, value in indexDict.items():
         if value == index: return key
 
     return None    
 
-#print(fromOneHot(toOneHot("Wednesday", weekdaysDict), weekdaysDict))
 
 def convertInputs(month, hour, day):
     month = toOneHot(month, monthsDict)
@@ -60,33 +60,66 @@ def convertInputs(month, hour, day):
 
     return np.concatenate( (month, hour, day) )
 
-converted = convertInputs("7", "3", "Wednesday")
-#print(converted)
-#print(converted[:12])
-#print(converted[12: 12 + 24])
-#print(converted[12 + 24: 12 + 24 + 7])
-
-
-
-def eval_zip(month, hour, day, model_prefix = model_prefixes[0]):
+def prob_zip_helper(month, hour, day, model_prefix = model_prefixes[0]):
     input_var = convertInputs(month, hour, day)
-    #print(input_var)
-    #print(len(input_var))
-    oneHot = zip_model.eval({zip_model.arguments[0] : input_var})
-    label = fromOneHot(oneHot, zipsDict)
+    probs = zip_model.eval({zip_model.arguments[0] : input_var})
+    return C.softmax(probs).eval()
+
+def prob_crime_helper(month, hour, day, model_prefix = model_prefixes[0]):
+    input_var = convertInputs(month, hour, day)
+    probs = crime_model.eval({crime_model.arguments[0] : input_var})
+    return C.softmax(probs).eval()
+
+
+def sortedByValue(probs, dictionary):
+    probDict = {}
+    categories = sorted(dictionary, key = dictionary.get)
+
+    for category in categories:
+        #print("category =", category)
+        index = dictionary[category]
+        #print("index =", index)
+        probability = probs[ index ]
+        #print("probability =", probability)
+        probDict[category] = probability
+
+    return probDict
+
+##########################PUBLIC INTERFACE#######################################
+
+def prob_zip(month, hour, day, model_prefix = model_prefixes[0]):
+    probs = prob_zip_helper(month, hour, day, model_prefix = model_prefix)
+    return sortedByValue(probs[0], zipsDict)
+
+    #return np.ndarray.tolist(prob_zip_helper(month, hour, day, model_prefix = model_prefix))[0]
+
+def prob_crime(month, hour, day, model_prefix = model_prefixes[0]):
+    probs = prob_crime_helper(month, hour, day, model_prefix = model_prefix)
+    return sortedByValue(probs[0], crimesDict)
+
+    #return np.ndarray.tolist(prob_crime_helper(month, hour, day, model_prefix = model_prefix))[0]
+
+def prob_both(month, hour, day, model_prefix = model_prefixes[0]):
+    return prob_zip(month, hour, day, model_prefix = model_prefix), prob_crime(month, hour, day, model_prefix = model_prefix)
+
+#zip_code, crime = prob_both("7", "3", "Wednesday")
+#print(zip_code)
+#print(crime)
+
+"""
+def eval_zip(month, hour, day, model_prefix = model_prefixes[0]):
+    probs = prob_zip_helper(month, hour, day, model_prefix = model_prefix)
+    label = fromProbs(probs, zipsDict)
     return label
 
-
-
 def eval_crime(month, hour, day, model_prefix = model_prefixes[0]):
-    input = convertInputs(month, hour, day)
-    oneHot = crime_model.eval({crime_model.arguments[0] : input})
-    label = fromOneHot(oneHot, crimesDict)
+    probs = prob_crime_helper(month, hour, day, model_prefix = model_prefix)
+    label = fromProbs(probs, crimesDict)
     return label
 
 def eval_both(month, hour, day, model_prefix = model_prefixes[0]):
     return eval_zip(month, hour, day, model_prefix = model_prefix), eval_crime(month, hour, day, model_prefix = model_prefix)
 
-zip_code, crime = eval_both("7", "3", "Wednesday")
-print(zip_code)
-print(crime)
+"""
+
+
