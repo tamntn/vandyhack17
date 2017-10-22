@@ -1,13 +1,35 @@
+#!/usr/bin/python
 from flask import Flask, render_template, url_for,  request, redirect
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
 import json
 import watson_developer_cloud 
 import sys
-#from model.model_func import prob_zip, prob_crime, prob_both
-
+from model_func import *
+import csv
 app = Flask(__name__)
 
+ziploc={
+"85701":"Tucson Convention Center, N. Granada Ave, S. Stone Ave, S. 6th Ave & S. 4th Ave",
+"85704":"Casas Adobes (N. La Canada Dr, Tohono Chul Park, W. Magee Rd & W. Calle Concordia)",
+"85705":"Flowing Wells, Limberlost & Amphi Areas",
+"85706":"S. Nogales Hway, S. Campbell Ave & E. Benson Hway",
+"85709":"University of Arizona campus & N. Commerce Park Loop ",
+"85710":"E. Broadway Blvd & E. 22nd St around Panano Wash Trails",
+"85711":"Poets Square, Highland Vista Cinco Via, Naylor & Myers Areas",
+"85712":"Rillito, Old Fort Lowell, Glenn Heights, Tucson Botanical Gardens, Avondale & Harlan Heights",
+"85713":"S. La Cholla Blvd, S. Mission Road, Santa Cruz River Park & Las Vistas",
+"85715":"Tucson Country Club, Sunset North & Indian Ridge Estates",
+"85716":"Central Tucson (N. Country Club Road, Palo Verde, El Conquistador)",
+"85718":"Catalina Foothills and North Areas",
+"85719":"Campus Farm, Mountain View, Samos, Campbell Grant, Catalina Vista & Jefferson Park",
+"85721":"Central Campus - University of Arizona",
+"85724":"University of Arizon - College of Medicine and Surrounding Medical Facilities",
+"85745":"West Tucson Areas",
+"85748":"East Tucson Areas",
+"85755":"North Tucson Areas (Stone Canyon, Rancho Vistoso, Sunridge & Innovation Corporate Center)",
+"85756":"South Tucson Areas & Tucson International Airport"
+}
 
 @app.route("/")
 def hello():
@@ -70,6 +92,8 @@ def redzone():
 		re=re+" \n"+redzone
 	return re
 
+
+
 contexts=[]
 @app.route("/bot", methods=['GET','POST'])
 def bot_talk():
@@ -93,11 +117,10 @@ def bot_talk():
    	 password='MD42bUyTN2CE',
     	version='2017-05-26')
 	
-    
+  
 	response=conversation.message(workspace_id='1d7276eb-2bff-4e67-b8fc-8261df022546',
                              message_input={'text': message})
-
-
+	print(json.dumps(response, indent=2))
 	account_sid = "ACc5173ddda5dea6f7c9b4398c0f80d545"
 	auth_token  = "87e59826d7f49301f6bebedf32d21d51"
 	client = Client(account_sid, auth_token)
@@ -108,9 +131,22 @@ def bot_talk():
 				contexts.append({'from': number, 'context': response.context})
 			else:
 				contexts[contextIndex].context = response.context
-		if response["intents"][0]['intent']=="Redzone":
-			apple =str(redzone())
-		else:
+		reply =response["output"]["text"][0]
+		try:
+			e=response["entities"][0]["entity"]
+		except:
+			e=" "
+
+		if response["intents"][0]['intent']=="Redzone" and e=="sys-date":
+			apple =response["entities"][0]["value"]
+			m=apple.split("-")[1]
+			d=apple.split("-")[2]
+			string=""
+			zipvalues=prob_zip(m,d,"Friday")
+			for _, zipcode in zip(range(3),zipvalues):
+				string=string+(ziploc[zipcode])+"\n Prob "+str(zipvalues[zipcode])+" \n"
+			apple="I have listed 3 danger zone: "+string
+		else:	
 			apple=response["output"]["text"][0]
 	
 		message1 = client.messages.create(
@@ -121,7 +157,7 @@ def bot_talk():
 		message1 = client.messages.create(
 		to=number, 
 		from_=twilioNumber,
-		body="I dont understand")
+		body="I am learning.")
 	# new(response)
 	
 if __name__ == '__main__':

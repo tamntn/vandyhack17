@@ -134,14 +134,11 @@ def eval_zip(month, hour, day, model_prefix = model_prefixes[0]):
     probs = prob_zip_helper(month, hour, day, model_prefix = model_prefix)
     label = fromProbs(probs, zipsDict)
     return label
-
 def eval_crime(month, hour, day, model_prefix = model_prefixes[0]):
     probs = prob_crime_helper(month, hour, day, model_prefix = model_prefix)
     label = fromProbs(probs, crimesDict)
     return label
-
 def eval_both(month, hour, day, model_prefix = model_prefixes[0]):
     return eval_zip(month, hour, day, model_prefix = model_prefix), eval_crime(month, hour, day, model_prefix = model_prefix)
 """
-
-
+#print(prob_zip("2","2","Sunday"))
