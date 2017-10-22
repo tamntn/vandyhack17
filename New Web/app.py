@@ -4,6 +4,7 @@ from twilio.rest import Client
 import json
 import watson_developer_cloud 
 import sys
+#from model.model_func import prob_zip, prob_crime, prob_both
 
 app = Flask(__name__)
 
