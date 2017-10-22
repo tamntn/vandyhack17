@@ -32,6 +32,7 @@
             <a href="./" class="simple-text">
                 Campus Crime Modeling
             </a>
+
         </div>
         <div class="sidebar-wrapper">
             <ul class="nav">
@@ -97,7 +98,9 @@
                             {#                                    <i class="material-icons">content_copy</i>#}
                             {#                                </div>#}
                             <div class="card-content">
-                                <p class="category">Total Data Points</p>
+
+                                <p class="category">Total</p>
+
                                 <h2 class="title">
                                     <div id="num1"></div>
                                 </h2>
@@ -544,8 +547,12 @@
 <script src="../static/js/demo.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+
+
         // Javascript method's body can be found in static/js/demos.js
         demo.initDashboardPageCharts();
+
+
         var options1 = {
             useEasing: true,
             useGrouping: true,
@@ -559,6 +566,7 @@
         } else {
             console.error(ex1.error);
         }
+
         var options2 = {
             useEasing: true,
             useGrouping: true,
@@ -572,6 +580,7 @@
         } else {
             console.error(ex2.error);
         }
+
         var options3 = {
             useEasing: true,
             useGrouping: true,
@@ -585,6 +594,7 @@
         } else {
             console.error(ex3.error);
         }
+
         var options4 = {
             useEasing: true,
             useGrouping: true,
@@ -598,6 +608,7 @@
         } else {
             console.error(ex4.error);
         }
+
     });
 </script>
 
