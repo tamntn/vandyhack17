@@ -4,8 +4,8 @@ from flask import Flask, render_template, url_for, request
 
 import json
 import numpy as np
-
-from application.app.folder.file import prob_zip, prob_crime, prob_both
+import operator
+# from application.app.folder.file import prob_zip, prob_crime, prob_both
 # import sys
 # sys.path.insert(0,'/path/to/model/'))
 
@@ -91,6 +91,26 @@ def incoming_sms():
     resp.message("this is a reply")
 
     return str(resp)
+
+
+@app.route("/month_day_hour",methods=['POST','GET'])
+def monthDayHr():
+	if request.method == "POST":
+		month = request.form['month']
+		day = request.form['day']
+		hour = request.form['hour']
+	dct_zipProb = prob_zip(month,hour,day)
+	zipAndProb = prob_zip_MClearning(dct_zipProb)
+	return render_template('mdh.html',zipcode=zipAndProb)
+
+def prob_zip_MClearning(dct_zipProb):
+	sorted_dct = sorted(dct_zipProb.items(),key=operator.itemgetter(1))
+	sorted_dct = dict(sorted_dct)
+	all_lat_lng=[]
+	for k,v in sorted_dct.items():
+		all_lat_lng.append(latAndLng(k))
+	lat_lng_top_three = [all_lat_lng[0],all_lat_lng[1], all_lat_lng[2],all_lat_lng[len(all_lat_lng)-3],all_lat_lng[len(all_lat_lng)-2],all_lat_lng[len(all_lat_lng)-1]]
+	return lat_lng_top_three
 
 if __name__ == "__main__":
     app.run(debug=True)
