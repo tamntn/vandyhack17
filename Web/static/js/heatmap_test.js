@@ -1,98 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Heatmaps</title>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #floating-panel {
-        position: absolute;
-        top: 10px;
-        left: 25%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
-      #floating-panel {
-        background-color: #fff;
-        border: 1px solid #999;
-        left: 25%;
-        padding: 5px;
-        position: absolute;
-        top: 10px;
-        z-index: 5;
-      }
-    </style>
-  </head>
-
-  <body>
-    <!-- <div id="floating-panel">
-      <button onclick="toggleHeatmap()">Toggle Heatmap</button>
-      <button onclick="changeGradient()">Change gradient</button>
-      <button onclick="changeRadius()">Change radius</button>
-      <button onclick="changeOpacity()">Change opacity</button>
-    </div> -->
-    <div>
-      <form action="/test" method="POST">
-        <input type='text' name='zipcode' placeholder="Zip Code">
-        <button class="btn btn-danger search_button" type="submit" name="search">Submit</button>
-      </form>
-    </div>
-    <div id="formatted-address"></div>
-    <div id="map"></div>
-<!--     <script>
-
-      // This example requires the Visualization library. Include the libraries=visualization
-      // parameter when you first load the API. For example:
-      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visualization">
-
+$(document).ready(function() {
       var map, heatmap;
-
-      //geocode();
-
-
-      // function geocode(){
-      //   var location = '38655'
-      //   axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
-      //       params:{
-      //         address: location,
-      //         key: 'AIzaSyBiiXe8XzHrBmgTMU8FrScTdzSa-00Xi-U'
-      //       }
-      //   })
-      //   .then(function(response){
-      //     //log full response
-      //     console.log(response);
-
-      //     //formatted Address
-      //     var myLatLng={}
-      //     myLatLng.push(response.data.results[0].geometry.location.lat)
-      //     var formattedAddress = response.data.results[0].geometry.location.lat;
-      //     var formattedAddressOutput = '<ul class = "list-group"><li class="list-group-item">'+formattedAddress+'</li><ul>';
-
-      //     document.getElementById('formatted-address').innerHTML = formattedAddressOutput;
-
-      //   })
-      //   .catch(function(error){
-      //     console.log(error);
-      //   });
-      // }
-
 
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -644,10 +551,7 @@
           new google.maps.LatLng(37.751266, -122.403355)
         ];
       }
-    </script> -->
-    <script type="text/javascript" src="{{ url_for('static',filename='js/heatmap.js')}}"></script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiiXe8XzHrBmgTMU8FrScTdzSa-00Xi-U&libraries=visualization&callback=initMap">
-    </script>
-  </body>
-</html>
+
+
+      google.maps.event.addDomListener(window, 'load', initMap);
+})
