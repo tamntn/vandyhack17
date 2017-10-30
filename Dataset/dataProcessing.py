@@ -7,7 +7,6 @@ import json
 
 filename = "originalArizona.csv"
 newfile = "cleanedArizona.csv"
-inputData = []
 
 def RepresentsInt(s):
     try: 
